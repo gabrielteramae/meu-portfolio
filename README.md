@@ -32,7 +32,7 @@ O site inclui:
 O site está hospedado no **GitHub Pages**.  
 Acesse em:
 
-🔗 https://gabrielteramae.github.io/meu-portifolio/
+🔗 https://gabrielteramae.github.io/meu-portfolio/
 
 ---
 
