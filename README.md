@@ -15,7 +15,6 @@ O site inclui:
 - Minha apresentação e resumo profissional  
 - Habilidades  
 - Projetos  
-- Link para download do meu currículo  
 - Link para o perfil do meu Linkedln
 
 ---
