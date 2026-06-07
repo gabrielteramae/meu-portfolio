@@ -3,7 +3,7 @@
 Este site foi criado para apresentar minha trajetória, minhas habilidades e 
 
 👉 **Acesse o portfólio aqui:**  
-https://gabrielteramae.github.io/meu-portifolio/
+https://gabrielteramae.github.io/meu-portfolio/
 
 ---
 
