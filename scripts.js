@@ -22,13 +22,3 @@ function showTab(tab, event) {
     document.getElementById("tab-" + tab).classList.add("active");
     event.target.closest(".tab-btn").classList.add("active");
 }
-const galleryIndex = {};
-
-function slideGallery(id, dir) {
-    const track = document.getElementById(id);
-    if (!track) return;
-    const total = track.children.length;
-    if (galleryIndex[id] === undefined) galleryIndex[id] = 0;
-    galleryIndex[id] = (galleryIndex[id] + dir + total) % total;
-    track.style.transform = `translateX(-${galleryIndex[id] * 100}%)`;
-}
