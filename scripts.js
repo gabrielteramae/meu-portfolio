@@ -13,7 +13,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }, { threshold: 0.05, rootMargin: "0px 0px -20px 0px" });
-
     document.querySelectorAll(".fade").forEach(el => observer.observe(el));
 });
 
@@ -22,4 +21,14 @@ function showTab(tab, event) {
     document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
     document.getElementById("tab-" + tab).classList.add("active");
     event.target.closest(".tab-btn").classList.add("active");
+}
+const galleryIndex = {};
+
+function slideGallery(id, dir) {
+    const track = document.getElementById(id);
+    if (!track) return;
+    const total = track.children.length;
+    if (galleryIndex[id] === undefined) galleryIndex[id] = 0;
+    galleryIndex[id] = (galleryIndex[id] + dir + total) % total;
+    track.style.transform = `translateX(-${galleryIndex[id] * 100}%)`;
 }
