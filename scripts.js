@@ -14,7 +14,32 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }, { threshold: 0.05, rootMargin: "0px 0px -20px 0px" });
     document.querySelectorAll(".fade").forEach(el => observer.observe(el));
+
+    document.querySelectorAll(".event-thumbs img").forEach(img => {
+        img.addEventListener("click", () => openLightbox(img.src, img.alt));
+    });
+
+    document.getElementById("lightbox").addEventListener("click", function (e) {
+        if (e.target === this) closeLightbox();
+    });
+
+    document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") closeLightbox();
+    });
 });
+
+function openLightbox(src, alt) {
+    const lb = document.getElementById("lightbox");
+    document.getElementById("lightbox-img").src = src;
+    document.getElementById("lightbox-img").alt = alt;
+    lb.classList.add("open");
+    document.body.style.overflow = "hidden";
+}
+
+function closeLightbox() {
+    document.getElementById("lightbox").classList.remove("open");
+    document.body.style.overflow = "";
+}
 
 function showTab(tab, event) {
     document.querySelectorAll(".tab-content").forEach(t => t.classList.remove("active"));
