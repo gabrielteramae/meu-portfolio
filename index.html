@@ -14,7 +14,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
@@ -199,7 +199,7 @@
     <div class="section-alt">
         <div class="section" id="events">
             <div class="section-label">Comunidade</div>
-            <h2 class="section-title">Eventos</h2>
+            <h2 class="section-title">Eventos & Comunidade</h2>
             <div class="events-list">
 
                 
@@ -309,7 +309,35 @@
         <img id="lightbox-img" src="" alt="">
     </div>
 
-    <script src="scripts.js"></script>
+    <div id="chat-widget">
+        <button id="chat-toggle" onclick="toggleChat()" aria-label="Abrir chat">
+            <i class="ri-sparkling-2-line" id="chat-icon-open"></i>
+            <i class="ri-close-line" id="chat-icon-close" style="display:none"></i>
+        </button>
+        <div id="chat-box">
+            <div id="chat-header">
+                <div id="chat-header-info">
+                    <div id="chat-avatar">G</div>
+                    <div>
+                        <div id="chat-name">Assistente do Gabriel</div>
+                        <div id="chat-status"><span id="chat-dot"></span>Online</div>
+                    </div>
+                </div>
+                <button id="chat-close-btn" onclick="toggleChat()"><i class="ri-close-line"></i></button>
+            </div>
+            <div id="chat-messages">
+                <div class="chat-msg bot">
+                    Olá! Sou o assistente virtual do Gabriel. Posso te contar sobre a experiência dele, skills, formação ou projetos. Como posso ajudar? 👋
+                </div>
+            </div>
+            <div id="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Escreva uma mensagem..." onkeydown="if(event.key==='Enter') sendMessage()" maxlength="300">
+                <button id="chat-send" onclick="sendMessage()"><i class="ri-send-plane-fill"></i></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 
 </html>
