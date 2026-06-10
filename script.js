@@ -47,3 +47,79 @@ function showTab(tab, event) {
     document.getElementById("tab-" + tab).classList.add("active");
     event.target.closest(".tab-btn").classList.add("active");
 }
+
+
+const SYSTEM_PROMPT = `Você é o assistente virtual do portfólio de Gabriel Teramae Chan. Responda sempre em português, de forma simpática, direta e profissional. Não invente informações — use apenas o que está descrito abaixo.
+
+Sobre Gabriel Teramae Chan:
+- Profissional bancário com experiência em Risco Socioambiental e Climático (SAC)
+- Cursando Gestão Ambiental na USP (EACH) e Sistemas de Informação na Universidade Presbiteriana Mackenzie
+- Experiência como Assistente de Risco Social, Ambiental e Climático no Banco BMG (nov 2025 - mai 2026): gestão de riscos ESG, automação de dados com Python no Azure Databricks, governança de risco de crédito
+- Experiência como Estagiário na Faculdade CTA (jun-ago 2025): análise de dados, social selling, Excel, Google Sheets, CRM
+- Skills técnicas: Python, SQL, Azure Databricks, Power BI, Excel avançado, HTML/CSS/JavaScript, Git, AWS
+- Skills ESG: PRSAC, GRSAC, DRSAC, normas ISO, IFRS, PLD/FTP
+- Inglês C1 avançado
+- Participou da Semana de Produtos Itaú 2026 e da C6 Tech Week 2026
+- Contato: gabrielhaogoldie@gmail.com | LinkedIn: gabriel-teramae-chan-00552a2b7 | GitHub: gabrielteramae
+
+Responda perguntas sobre experiência, formação, skills, projetos e formas de contato. Se perguntarem algo fora desse escopo, redirecione gentilmente para os temas do portfólio. Mantenha respostas curtas e objetivas (máximo 3 parágrafos).`;
+
+let chatHistory = [];
+let chatOpen = false;
+
+function toggleChat() {
+    chatOpen = !chatOpen;
+    const box = document.getElementById("chat-box");
+    const iconOpen = document.getElementById("chat-icon-open");
+    const iconClose = document.getElementById("chat-icon-close");
+    box.classList.toggle("open", chatOpen);
+    iconOpen.style.display = chatOpen ? "none" : "";
+    iconClose.style.display = chatOpen ? "" : "none";
+    if (chatOpen) {
+        setTimeout(() => document.getElementById("chat-input").focus(), 100);
+    }
+}
+
+async function sendMessage() {
+    const input = document.getElementById("chat-input");
+    const text = input.value.trim();
+    if (!text) return;
+
+    input.value = "";
+    appendMessage(text, "user");
+    chatHistory.push({ role: "user", content: text });
+
+    const typingEl = appendMessage("Digitando...", "typing");
+
+    try {
+        const res = await fetch("/api/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                model: "claude-sonnet-4-20250514",
+                max_tokens: 1000,
+                system: SYSTEM_PROMPT,
+                messages: chatHistory
+            })
+        });
+
+        const data = await res.json();
+        const reply = data.content?.[0]?.text || "Desculpe, não consegui responder agora.";
+        typingEl.remove();
+        appendMessage(reply, "bot");
+        chatHistory.push({ role: "assistant", content: reply });
+    } catch {
+        typingEl.remove();
+        appendMessage("Erro ao conectar. Tente novamente.", "bot");
+    }
+}
+
+function appendMessage(text, type) {
+    const messages = document.getElementById("chat-messages");
+    const el = document.createElement("div");
+    el.className = "chat-msg " + type;
+    el.textContent = text;
+    messages.appendChild(el);
+    messages.scrollTop = messages.scrollHeight;
+    return el;
+}
