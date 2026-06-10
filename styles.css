@@ -522,6 +522,7 @@ nav {
 .event-body {
     flex: 1;
     min-width: 0;
+    overflow: hidden;
 }
 
 .event-header {
@@ -570,58 +571,27 @@ nav {
     border-radius: 20px;
 }
 
-.event-gallery {
-    position: relative;
-    overflow: hidden;
-    border-radius: 10px;
-    margin: 14px 0 14px 0;
-    background: var(--bg3);
-    height: 220px;
-}
-
-.gallery-track {
+.event-thumbs {
     display: flex;
-    height: 100%;
-    transition: transform 0.4s cubic-bezier(.4, 0, .2, 1);
+    gap: 8px;
+    margin: 14px 0;
 }
 
-.gallery-track img {
-    flex-shrink: 0;
-    width: 100%;
-    height: 100%;
+.event-thumbs img {
+    width: 120px;
+    height: 80px;
     object-fit: cover;
-    object-position: center;
-    user-select: none;
-    pointer-events: none;
-}
-
-.gallery-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.85);
-    border: none;
-    border-radius: 50%;
-    width: 32px;
-    height: 32px;
-    font-size: 0.9rem;
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    transition: transform 0.2s, box-shadow 0.2s;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.15);
-    transition: background 0.2s, opacity 0.2s;
-    opacity: 0.7;
-    z-index: 2;
+    flex-shrink: 0;
 }
 
-.gallery-btn:hover {
-    background: #fff;
-    opacity: 1;
+.event-thumbs img:hover {
+    transform: scale(1.04);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.15);
 }
-
-.gallery-btn.prev { left: 8px; }
-.gallery-btn.next { right: 8px; }
 
 .certs-grid {
     display: grid;
