@@ -104,13 +104,13 @@ async function sendMessage() {
         });
 
         const data = await res.json();
-        const reply = data.content?.[0]?.text || "Desculpe, não consegui responder agora.";
+        const reply = data.content?.[0]?.text || data.error?.message || "Desculpe, não consegui responder agora.";
         typingEl.remove();
         appendMessage(reply, "bot");
         chatHistory.push({ role: "assistant", content: reply });
-    } catch {
+    } catch (err) {
         typingEl.remove();
-        appendMessage("Erro ao conectar. Tente novamente.", "bot");
+        appendMessage("Erro: " + err.message, "bot");
     }
 }
 
