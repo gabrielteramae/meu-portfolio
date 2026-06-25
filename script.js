@@ -59,7 +59,7 @@ Sobre Gabriel Teramae Chan:
 - Skills técnicas: Python, SQL, Azure Databricks, Power BI, Excel avançado, HTML/CSS/JavaScript, Git, AWS
 - Skills ESG: PRSAC, GRSAC, DRSAC, normas ISO, IFRS, PLD/FTP
 - Inglês C1 avançado
-- Participou da Semana de Produtos Itaú 2026 e da C6 Tech Week 2026
+- Eventos: Semana de Produtos Itaú 2026 (IA aplicada a produtos e experiências), C6 Tech Week 2026 (arquitetura de sistemas, IA na experiência do cliente e prevenção de fraudes), LLMs eficientes: custo, contexto e arquitetura — evento no Cubo Itaú em parceria com a Microsoft, com foco em como arquitetura, gestão de contexto e model routing impactam custo e performance em soluções com LLMs
 - Contato: gabrielhaogoldie@gmail.com | LinkedIn: gabriel-teramae-chan-00552a2b7 | GitHub: gabrielteramae
 
 Responda perguntas sobre experiência, formação, skills, projetos e formas de contato. Se perguntarem algo fora desse escopo, redirecione gentilmente para os temas do portfólio. Mantenha respostas curtas e objetivas (máximo 3 parágrafos).`;
@@ -96,7 +96,7 @@ async function sendMessage() {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
-                model: "claude-sonnet-4-5",
+                model: "claude-sonnet-4-6",
                 max_tokens: 1000,
                 system: SYSTEM_PROMPT,
                 messages: chatHistory
