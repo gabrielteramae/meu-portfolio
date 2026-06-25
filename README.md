@@ -1,6 +1,6 @@
 # 🧑‍💻 Meu Portfólio – Gabriel Teramae Chan
   
-Este site foi criado para apresentar minha trajetória, minhas habilidades e 
+Este site foi criado para apresentar minha trajetória, minhas habilidades e interesses.
 
 👉 **Acesse o portfólio aqui:**  
 https://gabrielteramae.github.io/meu-portfolio/
