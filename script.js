@@ -60,7 +60,7 @@ Sobre Gabriel Teramae Chan:
 - Skills ESG: PRSAC, GRSAC, DRSAC, normas ISO, IFRS, PLD/FTP
 - Inglês C1 avançado
 
-Projetos Pessoais (GitHub - github.com/gabrielteramae):
+Projetos Pessoais (todos disponíveis no GitHub - github.com/gabrielteramae):
 - portfolio-status-tracker: vitrine de projetos com monitoramento de status em tempo real, feito em React, Vite e hooks personalizados para checagem de uptime
 - risk-management-credit: simulador de credit scoring com modelo treinado em dataset público de crédito, formulário para simular probabilidade de inadimplência, em Python com scikit-learn e FastAPI
 - esg-dashboard: dashboard ESG com dados reais de qualidade do ar, CO2 e energia renovável via APIs públicas, feito em Angular e TypeScript
@@ -73,6 +73,8 @@ Projetos Pessoais (GitHub - github.com/gabrielteramae):
 - transformador-de-arquivos: conversor e filtro de arquivos CSV, JSON ou XML direto no navegador, em C# / ASP.NET Core, hospedado na Railway
 - r6career: painel de estatísticas para Rainbow Six Siege (projeto privado, em desenvolvimento)
 - gabrielteramae: repositório "Sobre mim" do perfil do GitHub
+
+Para ver a lista completa e atualizada de projetos, direcione a pessoa para github.com/gabrielteramae?tab=repositories.
 
 Eventos: O Custo da IA - Estratégias para Escalar sem Explodir o Budget (Cubo Itaú, com a Oracle, sobre arquitetura, infraestrutura, engenharia de dados, governança e otimização de recursos para escalar IA), Itaú Carreiras 2026 (reflexões sobre carreira, cultura e mercado financeiro, e conhecimento do novo Programa de Estágio do Itaú), Semana de Produtos Itaú 2026 (IA aplicada a produtos e experiências), C6 Tech Week 2026 (arquitetura de sistemas, IA na experiência do cliente e prevenção de fraudes), LLMs eficientes: custo, contexto e arquitetura — evento no Cubo Itaú em parceria com a Microsoft, com foco em como arquitetura, gestão de contexto e model routing impactam custo e performance em soluções com LLMs
 - Contato: gabrielhaogoldie@gmail.com | LinkedIn: gabriel-teramae-chan-00552a2b7 | GitHub: gabrielteramae
