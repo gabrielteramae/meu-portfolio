@@ -23,8 +23,15 @@ document.addEventListener("DOMContentLoaded", function () {
         if (e.target === this) closeLightbox();
     });
 
+    document.getElementById("resume-modal").addEventListener("click", function (e) {
+        if (e.target === this) closeResume();
+    });
+
     document.addEventListener("keydown", function (e) {
-        if (e.key === "Escape") closeLightbox();
+        if (e.key === "Escape") {
+            closeLightbox();
+            closeResume();
+        }
     });
 });
 
@@ -38,6 +45,19 @@ function openLightbox(src, alt) {
 
 function closeLightbox() {
     document.getElementById("lightbox").classList.remove("open");
+    document.body.style.overflow = "";
+}
+
+function openResume() {
+    const modal = document.getElementById("resume-modal");
+    document.getElementById("resume-iframe").src = "curriculo-gabriel-teramae.pdf";
+    modal.classList.add("open");
+    document.body.style.overflow = "hidden";
+}
+
+function closeResume() {
+    document.getElementById("resume-modal").classList.remove("open");
+    document.getElementById("resume-iframe").src = "";
     document.body.style.overflow = "";
 }
 
