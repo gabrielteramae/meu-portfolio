@@ -610,6 +610,69 @@ nav {
     opacity: 1;
 }
 
+#resume-modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.75);
+    z-index: 9998;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+}
+
+#resume-modal.open {
+    display: flex;
+}
+
+#resume-modal-content {
+    background: white;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 900px;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+}
+
+#resume-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    font-weight: 700;
+    font-size: 0.9rem;
+    flex-shrink: 0;
+}
+
+#resume-modal-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#resume-modal-actions button {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: var(--text3);
+    line-height: 1;
+}
+
+#resume-modal-actions button:hover {
+    color: var(--text);
+}
+
+#resume-iframe {
+    flex: 1;
+    width: 100%;
+    border: none;
+}
+
 .certs-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -828,6 +891,15 @@ footer {
         flex-direction: column;
         align-items: flex-start;
         gap: 6px;
+    }
+
+    #resume-modal {
+        padding: 0;
+    }
+
+    #resume-modal-content {
+        height: 100vh;
+        border-radius: 0;
     }
 }
 
