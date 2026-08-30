@@ -40,5 +40,5 @@ Acesse em: [gabrielteramae.github.io/meu-portfolio](https://gabrielteramae.githu
 ## Contato
 
 - **GitHub:** [gabrielteramae](https://github.com/gabrielteramae)
-- **LinkedIn:** [Gabriel Teramae Chan](https://www.linkedin.com/in/gabriel-teramae-chan-00552a2b7/)
+- **LinkedIn:** [Gabriel Teramae Chan](https://www.linkedin.com/in/gabriel-teramae-aneps-00552a2b7)
 - **E-mail:** gabrielhaogoldie@gmail.com
