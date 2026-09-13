@@ -33,7 +33,60 @@ document.addEventListener("DOMContentLoaded", function () {
             closeResume();
         }
     });
+
+    initRepoCarousel();
 });
+
+// Painéis expansíveis de projetos (GitHub) — carrossel automático, direita -> esquerda
+function initRepoCarousel() {
+    const panels = Array.from(document.querySelectorAll(".repo-panel"));
+    if (!panels.length) return;
+
+    const wrap = document.querySelector(".repo-panels-wrap");
+    let currentIndex = panels.length - 1; // começa pelo painel mais à direita
+    let autoplayTimer = null;
+    const AUTOPLAY_DELAY = 3200;
+
+    function activate(index) {
+        panels.forEach((p) => p.classList.remove("active"));
+        panels[index].classList.add("active");
+        currentIndex = index;
+    }
+
+    function stepRightToLeft() {
+        activate((currentIndex - 1 + panels.length) % panels.length);
+    }
+
+    function stopAutoplay() {
+        clearInterval(autoplayTimer);
+        autoplayTimer = null;
+    }
+
+    function startAutoplay() {
+        stopAutoplay();
+        autoplayTimer = setInterval(stepRightToLeft, AUTOPLAY_DELAY);
+    }
+
+    activate(currentIndex);
+    startAutoplay();
+
+    panels.forEach((panel, i) => {
+        panel.addEventListener("click", (e) => {
+            // primeiro clique só expande e reinicia o ciclo; se já estiver ativo, o link segue pro GitHub
+            if (!panel.classList.contains("active")) {
+                e.preventDefault();
+                activate(i);
+                startAutoplay();
+            }
+        });
+    });
+
+    if (wrap) {
+        wrap.addEventListener("mouseenter", stopAutoplay);
+        wrap.addEventListener("mouseleave", startAutoplay);
+        wrap.addEventListener("touchstart", stopAutoplay, { passive: true });
+    }
+}
 
 function openLightbox(src, alt) {
     const lb = document.getElementById("lightbox");
