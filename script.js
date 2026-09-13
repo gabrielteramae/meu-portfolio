@@ -23,9 +23,12 @@ document.addEventListener("DOMContentLoaded", function () {
         if (e.target === this) closeLightbox();
     });
 
-    document.getElementById("resume-modal").addEventListener("click", function (e) {
-        if (e.target === this) closeResume();
-    });
+    const resumeModalEl = document.getElementById("resume-modal");
+    if (resumeModalEl) {
+        resumeModalEl.addEventListener("click", function (e) {
+            if (e.target === this) closeResume();
+        });
+    }
 
     document.addEventListener("keydown", function (e) {
         if (e.key === "Escape") {
@@ -72,7 +75,6 @@ function initRepoCarousel() {
 
     panels.forEach((panel, i) => {
         panel.addEventListener("click", (e) => {
-            // primeiro clique só expande e reinicia o ciclo; se já estiver ativo, o link segue pro GitHub
             if (!panel.classList.contains("active")) {
                 e.preventDefault();
                 activate(i);
