@@ -494,35 +494,36 @@ nav {
     margin-bottom: 14px;
 }
 
-.repo-panels {
-    display: flex;
-    gap: 10px;
-    height: 360px;
-}
-
-.repo-panel {
-    position: relative;
-    flex: 1;
-    border-radius: 20px;
+.repo-marquee {
     overflow: hidden;
-    cursor: pointer;
-    transition: flex 0.6s cubic-bezier(.4, 0, .2, 1);
-    display: block;
+    width: 100%;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent);
 }
 
-.repo-panel.active {
-    flex: 4.2;
+.repo-track {
+    display: flex;
+    gap: 16px;
+    width: max-content;
+    animation: repo-scroll 32s linear infinite;
 }
 
-.repo-panel-1 { background: linear-gradient(160deg, #111827, #374151); }
-.repo-panel-2 { background: linear-gradient(160deg, #0f172a, #1d4ed8); }
-.repo-panel-3 { background: linear-gradient(160deg, #7c2d12, #ea580c); }
-.repo-panel-4 { background: linear-gradient(160deg, #14532d, #16a34a); }
-.repo-panel-5 { background: linear-gradient(160deg, #4c1d95, #7c3aed); }
+@keyframes repo-scroll {
+    from {
+        transform: translateX(0);
+    }
 
-.repo-panel-inner {
-    position: absolute;
-    inset: 0;
+    to {
+        /* metade da largura = exatamente um conjunto de cards (sem duplicata) */
+        transform: translateX(-50%);
+    }
+}
+
+.repo-card {
+    flex-shrink: 0;
+    width: 260px;
+    min-height: 280px;
+    border-radius: 20px;
     padding: 22px;
     display: flex;
     flex-direction: column;
@@ -530,56 +531,41 @@ nav {
     color: white;
 }
 
-.repo-panel-tag {
+.repo-card-1 { background: linear-gradient(160deg, #111827, #374151); }
+.repo-card-2 { background: linear-gradient(160deg, #0f172a, #1d4ed8); }
+.repo-card-3 { background: linear-gradient(160deg, #7c2d12, #ea580c); }
+.repo-card-4 { background: linear-gradient(160deg, #14532d, #16a34a); }
+.repo-card-5 { background: linear-gradient(160deg, #4c1d95, #7c3aed); }
+
+.repo-card-tag {
     font-size: 0.68rem;
     font-weight: 700;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.7);
     margin-bottom: 8px;
-    white-space: nowrap;
 }
 
-.repo-panel-name {
+.repo-card-name {
     font-size: 1rem;
     font-weight: 700;
     margin-bottom: 8px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
-.repo-panel-desc {
+.repo-card-desc {
     font-size: 0.8rem;
     line-height: 1.6;
     color: rgba(255, 255, 255, 0.85);
-    max-height: 0;
-    opacity: 0;
-    overflow: hidden;
-    transition: max-height 0.5s ease, opacity 0.4s ease;
+    margin-bottom: 14px;
 }
 
-.repo-panel.active .repo-panel-desc {
-    max-height: 100px;
-    opacity: 1;
-    margin-bottom: 12px;
-}
-
-.repo-panel-link {
+.repo-card-link {
     font-size: 0.78rem;
     font-weight: 600;
     display: inline-flex;
     align-items: center;
     gap: 4px;
-    opacity: 0;
-    transform: translateY(6px);
-    transition: opacity 0.4s ease 0.1s, transform 0.4s ease 0.1s;
     width: fit-content;
-}
-
-.repo-panel.active .repo-panel-link {
-    opacity: 1;
-    transform: translateY(0);
 }
 
 .events-list {
@@ -992,32 +978,13 @@ footer {
         gap: 6px;
     }
 
-    .repo-panels {
-        flex-direction: column;
-        height: auto;
+    .repo-card {
+        width: 200px;
+        min-height: 240px;
     }
 
-    .repo-panel {
-        height: 64px;
-        flex: none;
-        transition: height 0.5s ease;
-    }
-
-    .repo-panel.active {
-        height: 220px;
-        flex: none;
-    }
-
-    .repo-panel-inner {
-        justify-content: center;
-    }
-
-    .repo-panel:not(.active) .repo-panel-inner {
-        padding: 16px 20px;
-    }
-
-    .repo-panel:not(.active) .repo-panel-tag {
-        display: none;
+    .repo-track {
+        animation-duration: 22s;
     }
 
     #resume-modal {
