@@ -533,9 +533,10 @@ nav {
 
 .repo-card-1 { background: linear-gradient(160deg, #111827, #374151); }
 .repo-card-2 { background: linear-gradient(160deg, #0f172a, #1d4ed8); }
-.repo-card-3 { background: linear-gradient(160deg, #7c2d12, #ea580c); }
+.repo-card-3 { background: linear-gradient(160deg, #4c1d95, #7c3aed); }
 .repo-card-4 { background: linear-gradient(160deg, #14532d, #16a34a); }
-.repo-card-5 { background: linear-gradient(160deg, #4c1d95, #7c3aed); }
+.repo-card-5 { background: linear-gradient(160deg, #0c4a6e, #0891b2); }
+.repo-card-6 { background: linear-gradient(160deg, #7c2d12, #ea580c); }
 
 .repo-card-tag {
     font-size: 0.68rem;
