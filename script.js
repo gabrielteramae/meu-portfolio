@@ -36,7 +36,35 @@ document.addEventListener("DOMContentLoaded", function () {
             closeResume();
         }
     });
+
+    initThemeToggle();
 });
+
+// Alterna entre modo claro/escuro e salva a preferência do usuário
+function initThemeToggle() {
+    const toggleBtn = document.getElementById("theme-toggle");
+    const iconMoon = document.getElementById("theme-icon-moon");
+    const iconSun = document.getElementById("theme-icon-sun");
+    if (!toggleBtn) return;
+
+    function updateIcon(theme) {
+        const isDark = theme === "dark";
+        iconMoon.style.display = isDark ? "none" : "";
+        iconSun.style.display = isDark ? "" : "none";
+        toggleBtn.title = isDark ? "Modo claro" : "Modo escuro";
+    }
+
+    // o <head> já aplicou o tema salvo/preferido antes do paint; só sincroniza o ícone
+    updateIcon(document.documentElement.getAttribute("data-theme") || "light");
+
+    toggleBtn.addEventListener("click", () => {
+        const current = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+        const next = current === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", next);
+        localStorage.setItem("theme", next);
+        updateIcon(next);
+    });
+}
 
 function openLightbox(src, alt) {
     const lb = document.getElementById("lightbox");
