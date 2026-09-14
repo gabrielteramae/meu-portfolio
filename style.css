@@ -560,7 +560,6 @@ nav {
     }
 
     to {
-        /* metade da largura = exatamente um conjunto de cards (sem duplicata) */
         transform: translateX(-50%);
     }
 }
