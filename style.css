@@ -21,13 +21,32 @@ html {
     --green: #374151;
     --green-light: #f3f4f6;
     --green-mid: #374151;
+    --ink: #111827;
+    --nav-bg: rgba(255, 255, 255, 0.85);
     --radius: 12px;
+    color-scheme: light;
+}
+
+:root[data-theme="dark"] {
+    --bg: #0e1015;
+    --bg2: #15171d;
+    --bg3: #1c1f27;
+    --border: #2b2f39;
+    --text: #f3f4f6;
+    --text2: #d1d5db;
+    --text3: #9ca3af;
+    --green: #9ca3af;
+    --green-light: #1c1f27;
+    --green-mid: #9ca3af;
+    --nav-bg: rgba(14, 16, 21, 0.85);
+    color-scheme: dark;
 }
 
 body {
     font-family: "Inter", sans-serif;
     background: var(--bg);
     color: var(--text);
+    transition: background 0.3s ease, color 0.3s ease;
     font-size: 15px;
     line-height: 1.6;
 }
@@ -119,7 +138,7 @@ nav {
     position: sticky;
     top: 0;
     z-index: 100;
-    background: rgba(255, 255, 255, 0.85);
+    background: var(--nav-bg);
     backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
     padding: 0 5%;
@@ -166,13 +185,40 @@ nav {
     font-weight: 600;
     padding: 8px 16px;
     border-radius: 8px;
-    background: var(--text);
+    background: var(--ink);
     color: white;
     transition: opacity 0.2s;
 }
 
 .nav-cta:hover {
     opacity: 0.85;
+}
+
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.theme-toggle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1.5px solid var(--border);
+    background: var(--bg);
+    color: var(--text2);
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    flex-shrink: 0;
+}
+
+.theme-toggle:hover {
+    border-color: var(--text2);
+    color: var(--text);
 }
 
 #hero {
@@ -242,7 +288,7 @@ nav {
     align-items: center;
     gap: 8px;
     padding: 12px 22px;
-    background: var(--text);
+    background: var(--ink);
     color: white;
     font-size: 0.85rem;
     font-weight: 600;
@@ -305,7 +351,7 @@ nav {
 }
 
 .edu-card {
-    background: white;
+    background: var(--bg);
     border: 1.5px solid var(--border);
     border-radius: var(--radius);
     padding: 24px 28px;
@@ -357,7 +403,7 @@ nav {
     grid-template-columns: 1fr auto;
     gap: 16px;
     align-items: start;
-    background: white;
+    background: var(--bg);
     transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
 }
 
@@ -412,7 +458,7 @@ nav {
     padding: 8px 20px;
     border-radius: 20px;
     border: 1.5px solid var(--border);
-    background: white;
+    background: var(--bg);
     color: var(--text3);
     font-size: 0.82rem;
     font-weight: 600;
@@ -441,7 +487,7 @@ nav {
 }
 
 .skill-card {
-    background: white;
+    background: var(--bg);
     border: 1.5px solid var(--border);
     border-radius: var(--radius);
     padding: 24px;
@@ -577,7 +623,7 @@ nav {
 }
 
 .event-card {
-    background: white;
+    background: var(--bg);
     border: 1.5px solid var(--border);
     border-radius: var(--radius);
     padding: 24px 28px;
@@ -712,7 +758,7 @@ nav {
 }
 
 #resume-modal-content {
-    background: white;
+    background: var(--bg);
     border-radius: 12px;
     width: 100%;
     max-width: 900px;
@@ -766,7 +812,7 @@ nav {
 }
 
 .cert-card {
-    background: white;
+    background: var(--bg);
     border: 1.5px solid var(--border);
     border-radius: var(--radius);
     padding: 18px 20px;
@@ -827,7 +873,7 @@ nav {
     border-radius: var(--radius);
     border: 1.5px solid var(--border);
     padding: 18px 20px;
-    background: white;
+    background: var(--bg);
 }
 
 .cert-back {
@@ -851,7 +897,7 @@ nav {
 }
 
 #contact {
-    background: var(--text);
+    background: var(--ink);
     color: white;
 }
 
