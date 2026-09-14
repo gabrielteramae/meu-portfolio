@@ -40,7 +40,6 @@ document.addEventListener("DOMContentLoaded", function () {
     initThemeToggle();
 });
 
-// Alterna entre modo claro/escuro e salva a preferência do usuário
 function initThemeToggle() {
     const toggleBtn = document.getElementById("theme-toggle");
     const iconMoon = document.getElementById("theme-icon-moon");
@@ -54,7 +53,6 @@ function initThemeToggle() {
         toggleBtn.title = isDark ? "Modo claro" : "Modo escuro";
     }
 
-    // o <head> já aplicou o tema salvo/preferido antes do paint; só sincroniza o ícone
     updateIcon(document.documentElement.getAttribute("data-theme") || "light");
 
     toggleBtn.addEventListener("click", () => {
