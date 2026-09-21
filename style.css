@@ -8,6 +8,7 @@
 
 html {
     scroll-behavior: smooth;
+    scroll-padding-top: 72px;
 }
 
 :root {
@@ -49,6 +50,13 @@ body {
     transition: background 0.3s ease, color 0.3s ease;
     font-size: 15px;
     line-height: 1.6;
+    overflow-x: hidden;
+    overflow-wrap: break-word;
+    -webkit-text-size-adjust: 100%;
+}
+
+img {
+    max-width: 100%;
 }
 
 a {
@@ -155,6 +163,10 @@ nav {
     display: flex;
     align-items: center;
     gap: 8px;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .nav-links {
@@ -198,6 +210,59 @@ nav {
     display: flex;
     align-items: center;
     gap: 12px;
+    flex-shrink: 0;
+}
+
+.menu-toggle {
+    display: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1.5px solid var(--border);
+    background: var(--bg);
+    color: var(--text2);
+    font-size: 1.2rem;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.mobile-menu {
+    display: none;
+    position: sticky;
+    top: 60px;
+    z-index: 99;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px 5%;
+    background: var(--nav-bg);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+}
+
+.mobile-menu.open {
+    display: flex;
+}
+
+.mobile-menu a {
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text2);
+    padding: 12px 10px;
+    border-radius: 8px;
+}
+
+.mobile-menu a:active {
+    background: var(--bg3);
+}
+
+.mobile-menu .mobile-menu-cta {
+    margin-top: 4px;
+    background: var(--ink);
+    color: white;
+    font-weight: 600;
+    text-align: center;
 }
 
 .theme-toggle {
@@ -219,6 +284,12 @@ nav {
 .theme-toggle:hover {
     border-color: var(--text2);
     color: var(--text);
+}
+
+.hero-wrap {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 5%;
 }
 
 #hero {
@@ -274,6 +345,7 @@ nav {
 .hero-bullet {
     font-size: 0.9rem;
     color: var(--text2);
+    max-width: 560px;
 }
 
 .hero-btns {
@@ -998,8 +1070,14 @@ footer {
         display: none;
     }
 
+    .menu-toggle {
+        display: flex;
+    }
+
     #hero {
         grid-template-columns: 1fr;
+        min-height: 0;
+        padding: 48px 0 56px;
     }
 
     .contact-grid {
@@ -1009,13 +1087,79 @@ footer {
 }
 
 @media (max-width: 560px) {
+    nav {
+        padding: 0 16px;
+        gap: 10px;
+    }
+
+    .nav-logo {
+        font-size: 0.9rem;
+    }
+
+    .nav-cta {
+        display: none;
+    }
+
+    .mobile-menu {
+        padding: 12px 16px;
+    }
+
+    .section,
+    #contact .section {
+        padding: 48px 16px;
+    }
+
+    .hero-wrap {
+        padding: 0 16px;
+    }
+
+    .hero-title {
+        font-size: clamp(2rem, 9vw, 2.6rem);
+    }
+
+    .hero-btns {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .hero-btns a {
+        justify-content: center;
+    }
+
+    .edu-card {
+        padding: 20px;
+        gap: 14px;
+    }
+
     .exp-card {
         grid-template-columns: 1fr;
+        padding: 20px;
+    }
+
+    .skills-tabs {
+        gap: 8px;
+    }
+
+    .tab-btn {
+        padding: 8px 14px;
+        font-size: 0.78rem;
+    }
+
+    .event-thumbs img {
+        width: calc(50% - 4px);
+        height: 90px;
+        flex-shrink: 1;
+    }
+
+    footer {
+        padding: 20px 16px;
+        text-align: center;
     }
 
     .event-card {
         flex-direction: column;
         gap: 14px;
+        padding: 20px;
     }
 
     .event-header {

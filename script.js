@@ -38,7 +38,34 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     initThemeToggle();
+    initMobileMenu();
 });
+
+function initMobileMenu() {
+    const toggleBtn = document.getElementById("menu-toggle");
+    const menu = document.getElementById("mobile-menu");
+    const icon = document.getElementById("menu-icon");
+    if (!toggleBtn || !menu) return;
+
+    function setOpen(open) {
+        menu.classList.toggle("open", open);
+        toggleBtn.setAttribute("aria-expanded", String(open));
+        toggleBtn.setAttribute("aria-label", open ? "Fechar menu" : "Abrir menu");
+        icon.className = open ? "ri-close-line" : "ri-menu-line";
+    }
+
+    toggleBtn.addEventListener("click", () => {
+        setOpen(!menu.classList.contains("open"));
+    });
+
+    menu.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", () => setOpen(false));
+    });
+
+    window.addEventListener("resize", () => {
+        if (window.innerWidth > 860) setOpen(false);
+    });
+}
 
 function initThemeToggle() {
     const toggleBtn = document.getElementById("theme-toggle");
