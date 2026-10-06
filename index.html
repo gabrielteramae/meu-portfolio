@@ -27,12 +27,9 @@
 <body>
 
     <div id="loading-screen">
-        <div class="loading-content">
-            <div class="loading-name">Olá!</div>
-            <div class="loading-msg">Seja Bem-Vindo :)</div>
-            <div class="loading-bar">
-                <div class="loading-fill"></div>
-            </div>
+        <div id="falling-welcome" class="falling-text-container" aria-label="Olá! Seja Bem-Vindo :)"></div>
+        <div class="loading-bar" aria-hidden="true">
+            <div class="loading-fill"></div>
         </div>
     </div>
 
@@ -553,6 +550,8 @@
         <img id="lightbox-img" src="" alt="">
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script>
+    <script src="falling-text.js"></script>
     <script src="script.js"></script>
 </body>
 

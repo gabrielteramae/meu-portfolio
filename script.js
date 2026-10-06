@@ -1,8 +1,19 @@
-window.addEventListener('load', () => {
-    setTimeout(() => {
-        document.getElementById('loading-screen').classList.add('hide');
-    }, 1050);
-});
+(function () {
+    const screen = document.getElementById("loading-screen");
+    if (!screen) return;
+
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const minSplashMs = reduceMotion ? 1100 : 4600;
+    const started = performance.now();
+
+    function hideSplash() {
+        const wait = Math.max(0, minSplashMs - (performance.now() - started));
+        setTimeout(() => screen.classList.add("hide"), wait);
+    }
+
+    if (document.readyState === "complete") hideSplash();
+    else window.addEventListener("load", hideSplash);
+})();
 
 document.addEventListener("DOMContentLoaded", function () {
     const observer = new IntersectionObserver((entries) => {

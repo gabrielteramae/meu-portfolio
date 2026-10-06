@@ -1,3 +1,6 @@
 {
-  "type": "module"
+  "type": "module",
+  "dependencies": {
+    "matter-js": "^0.20.0"
+  }
 }
