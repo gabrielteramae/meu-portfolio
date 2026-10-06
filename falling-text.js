@@ -2,9 +2,10 @@
     const root = document.getElementById("falling-welcome");
     if (!root) return;
 
-    const text = "Olá! Seja Bem-Vindo :)";
-    const highlightWords = ["Olá", "Bem-Vindo"];
-    const highlightClass = "highlighted";
+    const lines = [
+        { words: ["Olá!"], className: "falling-line falling-line-hello" },
+        { words: ["Seja", "Bem-Vindo", ":)"], className: "falling-line falling-line-msg" }
+    ];
     const gravity = 0.56;
     const mouseConstraintStiffness = 0.9;
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -12,13 +13,17 @@
     const target = document.createElement("div");
     target.className = "falling-text-target";
 
-    text.split(" ").forEach((word, index) => {
-        if (index > 0) target.appendChild(document.createTextNode(" "));
-        const span = document.createElement("span");
-        const highlighted = highlightWords.some((hw) => word.startsWith(hw));
-        span.className = highlighted ? "word " + highlightClass : "word";
-        span.textContent = word;
-        target.appendChild(span);
+    lines.forEach((line) => {
+        const row = document.createElement("div");
+        row.className = line.className;
+        line.words.forEach((word, index) => {
+            if (index > 0) row.appendChild(document.createTextNode(" "));
+            const span = document.createElement("span");
+            span.className = "word";
+            span.textContent = word;
+            row.appendChild(span);
+        });
+        target.appendChild(row);
     });
 
     const canvasHost = document.createElement("div");

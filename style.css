@@ -97,26 +97,37 @@ a {
 }
 
 .falling-text-target {
-    display: inline-block;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.45em;
     max-width: min(920px, 92vw);
-    font-size: clamp(1.35rem, 4.6vw, 2rem);
-    line-height: 1.4;
-    font-weight: 600;
+    line-height: 1.2;
     letter-spacing: -0.03em;
+    color: #ffffff;
+}
+
+.falling-line {
+    white-space: nowrap;
+}
+
+.falling-line-hello .word {
+    font-size: clamp(2rem, 7vw, 2.75rem);
+    font-weight: 700;
+}
+
+.falling-line-msg .word {
+    font-size: clamp(1.05rem, 3.6vw, 1.35rem);
+    font-weight: 400;
 }
 
 .word {
     display: inline-block;
-    margin: 0 0.16em;
+    margin: 0 0.14em;
     white-space: nowrap;
-    color: #e5e7eb;
+    color: #ffffff;
     user-select: none;
     z-index: 2;
-}
-
-.word.highlighted {
-    color: cyan;
-    font-weight: 800;
 }
 
 .falling-text-canvas {
