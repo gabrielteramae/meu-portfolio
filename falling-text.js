@@ -3,7 +3,7 @@
     if (!root) return;
 
     const lines = [
-        { words: ["Olá", "!"], className: "falling-line falling-line-hello" },
+        { words: ["Olá!"], className: "falling-line falling-line-hello" },
         { words: ["Seja", "Bem-Vindo", ":)"], className: "falling-line falling-line-msg" }
     ];
     const gravity = 0.56;
@@ -91,24 +91,9 @@
                 density: 0.002,
                 render: { fillStyle: "transparent" }
             });
-            const text = elem.textContent;
-            if (text === "!") {
-                Body.setVelocity(body, { x: 3.4, y: -0.6 });
-                Body.setAngularVelocity(body, 0.12);
-            } else if (text === "Olá") {
-                Body.setVelocity(body, { x: -1.3, y: 0 });
-                Body.setAngularVelocity(body, -0.03);
-            } else {
-                Body.setVelocity(body, { x: (Math.random() - 0.5) * 1.4, y: 0 });
-                Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.02);
-            }
-            return {
-                elem,
-                body,
-                text,
-                width: Math.max(box.width, 8),
-                glued: false
-            };
+            Body.setVelocity(body, { x: (Math.random() - 0.5) * 1.4, y: 0 });
+            Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.02);
+            return { elem, body };
         });
 
         wordBodies.forEach(({ elem, body }) => {
@@ -139,33 +124,12 @@
         runner = Runner.create();
         Runner.run(runner, engine);
 
-        const hello = wordBodies.find((item) => item.text === "Olá");
-        const bang = wordBodies.find((item) => item.text === "!");
-        const joinAt = performance.now() + 2400;
-
-        function glueBang() {
-            if (!hello || !bang || bang.glued) return;
-            bang.glued = true;
-            World.remove(engine.world, bang.body);
-            Body.setAngularVelocity(hello.body, hello.body.angularVelocity * 0.25);
-        }
-
         const sync = () => {
             if (stopped) return;
-            if (performance.now() >= joinAt) glueBang();
-            wordBodies.forEach(({ body, elem, glued, width }) => {
-                let x = body.position.x;
-                let y = body.position.y;
-                let angle = body.angle;
-                if (glued && hello) {
-                    const gap = hello.width / 2 + width / 2 - 2;
-                    angle = hello.body.angle;
-                    x = hello.body.position.x + Math.cos(angle) * gap;
-                    y = hello.body.position.y + Math.sin(angle) * gap;
-                }
-                elem.style.left = x + "px";
-                elem.style.top = y + "px";
-                elem.style.transform = "translate(-50%, -50%) rotate(" + angle + "rad)";
+            wordBodies.forEach(({ body, elem }) => {
+                elem.style.left = body.position.x + "px";
+                elem.style.top = body.position.y + "px";
+                elem.style.transform = "translate(-50%, -50%) rotate(" + body.angle + "rad)";
             });
             raf = requestAnimationFrame(sync);
         };
