@@ -140,28 +140,27 @@
     startSnake(grid);
   }
 
-  var snakeTimer = 0;
-  var snakeMarks = [];
-
-  function clearSnake() {
-    snakeMarks.forEach(function (cell) {
-      cell.classList.remove("is-head");
-      cell.style.backgroundColor = "";
-    });
-    snakeMarks = [];
-  }
+  var snakeFrame = 0;
 
   function startSnake(grid) {
-    if (snakeTimer) clearInterval(snakeTimer);
-    clearSnake();
+    if (snakeFrame) cancelAnimationFrame(snakeFrame);
+    var previous = grid.querySelector(".contrib-snake");
+    if (previous) previous.remove();
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     var nodes = grid.children;
     if (!nodes.length || nodes.length % 7 !== 0) return;
-    var headIndex = -1;
-    var length = 8;
+
+    var snake = document.createElement("span");
+    snake.className = "contrib-snake";
+    snake.textContent = "🐍";
+    snake.setAttribute("aria-hidden", "true");
+    grid.appendChild(snake);
+
+    var cursor = -1;
     var dir = -1;
     var path = [];
     var windowKey = "";
+    var faceLeft = false;
 
     function visibleWindow() {
       var cols = nodes.length / 7;
@@ -178,45 +177,78 @@
         }
         if (rect.left <= view.right - 8) end = col;
       }
-      if (end - start < 2) start = Math.max(0, end - 6);
+      if (end - start < 3) start = Math.max(0, end - 8);
+      if (end - start > 6) {
+        start += 2;
+        end -= 2;
+      }
       return { start: start, end: end };
     }
 
-    function step() {
-      if (document.hidden) return;
+    function rebuild() {
       var win = visibleWindow();
       var key = win.start + ":" + win.end;
-      if (key !== windowKey) {
-        windowKey = key;
-        path = [];
+      if (key === windowKey) return;
+      windowKey = key;
+      path = [];
+      for (var row = 0; row < 7; row++) {
+        var leftToRight = row % 2 === 0;
         for (var col = win.start; col <= win.end; col++) {
-          var down = col % 2 === 0;
-          for (var row = 0; row < 7; row++) path.push(col * 7 + (down ? row : 6 - row));
+          var column = leftToRight ? col : win.end - (col - win.start);
+          path.push({
+            x: column * 15 + 6,
+            y: row * 15 + 6
+          });
         }
       }
-      if (path.length < 2) return;
-      var at = path.indexOf(headIndex);
-      if (at === -1) at = path.length - 1;
-      if (at + dir < 0 || at + dir >= path.length) dir *= -1;
-      at += dir;
-      headIndex = path[at];
-      clearSnake();
-      for (var i = 0; i < length; i++) {
-        var index = at - i * dir;
-        if (index < 0 || index >= path.length) break;
-        var cell = nodes[path[index]];
-        if (!cell) continue;
-        snakeMarks.push(cell);
-        if (i === 0) cell.classList.add("is-head");
-        else {
-          var fade = 1 - i / length;
-          cell.style.backgroundColor = "rgba(34, 197, 94, " + (0.28 + fade * 0.72).toFixed(2) + ")";
-        }
-      }
+      cursor = path.length - 1;
+      dir = -1;
     }
 
-    step();
-    snakeTimer = setInterval(step, 120);
+    function sample(at) {
+      var max = path.length - 1;
+      var t = Math.max(0, Math.min(max, at));
+      var i = Math.floor(t);
+      var f = t - i;
+      if (i >= max) return path[max];
+      return {
+        x: path[i].x + (path[i + 1].x - path[i].x) * f,
+        y: path[i].y + (path[i + 1].y - path[i].y) * f
+      };
+    }
+
+    function draw() {
+      if (document.hidden) return;
+      rebuild();
+      if (path.length < 4) return;
+
+      var max = path.length - 1;
+      if (cursor < 0) cursor = max;
+      cursor += dir * 0.05;
+      if (cursor >= max) {
+        cursor = max;
+        dir = -1;
+      } else if (cursor <= 0) {
+        cursor = 0;
+        dir = 1;
+      }
+
+      var head = sample(cursor);
+      var ahead = sample(cursor + dir * 0.8);
+      if (ahead.x < head.x - 0.4) faceLeft = true;
+      else if (ahead.x > head.x + 0.4) faceLeft = false;
+
+      var wiggle = Math.sin(performance.now() / 160) * 7;
+      snake.style.transform =
+        "translate(" + (head.x - 18) + "px, " + (head.y - 24) + "px) rotate(" + wiggle.toFixed(1) + "deg)" +
+        (faceLeft ? "" : " scaleX(-1)");
+    }
+
+    function loop() {
+      snakeFrame = requestAnimationFrame(loop);
+      draw();
+    }
+    loop();
   }
 
   fetch("https://github-contributions-api.jogruber.de/v4/" + USER + "?y=last", { cache: "no-store" })
