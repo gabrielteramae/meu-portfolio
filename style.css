@@ -342,7 +342,7 @@ nav {
     height: 150px;
     border-radius: 50%;
     object-fit: cover;
-    border: 3px solid #000;
+    border: 3px solid var(--border);
 }
 
 .hero-title {
