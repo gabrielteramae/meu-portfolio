@@ -35,14 +35,12 @@
 
     let stopped = false;
     let engine = null;
-    let runner = null;
     let raf = 0;
 
     function destroy() {
         if (stopped) return;
         stopped = true;
         cancelAnimationFrame(raf);
-        if (runner) Matter.Runner.stop(runner);
         if (engine) {
             Matter.World.clear(engine.world, false);
             Matter.Engine.clear(engine);
@@ -66,9 +64,12 @@
         const height = rect.height;
         if (width <= 0 || height <= 0) return;
 
-        const { Engine, World, Bodies, Mouse, MouseConstraint, Body, Runner } = Matter;
+        const { Engine, World, Bodies, Mouse, MouseConstraint, Body } = Matter;
 
-        engine = Engine.create();
+        engine = Engine.create({
+            positionIterations: 4,
+            velocityIterations: 3
+        });
         engine.world.gravity.y = gravity;
 
         const boundary = {
@@ -121,11 +122,12 @@
             ...wordBodies.map((item) => item.body)
         ]);
 
-        runner = Runner.create();
-        Runner.run(runner, engine);
-
-        const sync = () => {
+        let last = performance.now();
+        const sync = (now) => {
             if (stopped) return;
+            const delta = Math.min(32, now - last);
+            last = now;
+            Engine.update(engine, delta);
             wordBodies.forEach(({ body, elem }) => {
                 elem.style.left = body.position.x + "px";
                 elem.style.top = body.position.y + "px";
@@ -133,14 +135,10 @@
             });
             raf = requestAnimationFrame(sync);
         };
-        sync();
+        raf = requestAnimationFrame(sync);
     }
 
-    const boot = () => {
-        window.setTimeout(() => {
-            requestAnimationFrame(() => requestAnimationFrame(start));
-        }, 900);
-    };
+    const boot = () => requestAnimationFrame(start);
 
     if (document.fonts && document.fonts.ready) {
         document.fonts.ready.then(boot);

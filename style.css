@@ -23,7 +23,7 @@ html {
     --green-light: #f3f4f6;
     --green-mid: #374151;
     --ink: #111827;
-    --nav-bg: rgba(255, 255, 255, 0.85);
+    --nav-bg: rgba(255, 255, 255, 0.96);
     --radius: 12px;
     color-scheme: light;
 }
@@ -39,7 +39,7 @@ html {
     --green: #9ca3af;
     --green-light: #1c1f27;
     --green-mid: #9ca3af;
-    --nav-bg: rgba(14, 16, 21, 0.85);
+    --nav-bg: rgba(14, 16, 21, 0.96);
     color-scheme: dark;
 }
 
@@ -152,19 +152,17 @@ a {
 
 .loading-fill {
     height: 100%;
-    width: 0%;
+    width: 100%;
     background: #ffffff;
     border-radius: 99px;
-    animation: fill 4s ease 0.35s forwards;
+    transform: scaleX(0);
+    transform-origin: left center;
+    animation: fill 1.5s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
 }
 
 @keyframes fill {
-    from {
-        width: 0%;
-    }
-
     to {
-        width: 100%;
+        transform: scaleX(1);
     }
 }
 
@@ -173,7 +171,6 @@ nav {
     top: 0;
     z-index: 100;
     background: var(--nav-bg);
-    backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border);
     padding: 0 5%;
     display: flex;
@@ -206,7 +203,7 @@ nav {
     color: var(--text3);
     padding: 6px 12px;
     border-radius: 6px;
-    transition: all 0.2s;
+    transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
 }
 
 .nav-links a:hover {
@@ -261,14 +258,20 @@ nav {
     z-index: 99;
     flex-direction: column;
     gap: 4px;
-    padding: 12px 5%;
+    padding: 0 5%;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 0;
     background: var(--nav-bg);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid var(--border);
+    border-bottom: 1px solid transparent;
+    transition: max-height 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease, padding 0.35s ease;
 }
 
 .mobile-menu.open {
-    display: flex;
+    max-height: 420px;
+    opacity: 1;
+    padding: 12px 5%;
+    border-bottom-color: var(--border);
 }
 
 .mobile-menu a {
@@ -303,7 +306,7 @@ nav {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.2s;
+    transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
     flex-shrink: 0;
 }
 
@@ -408,7 +411,7 @@ nav {
     font-size: 0.85rem;
     font-weight: 600;
     border-radius: 8px;
-    transition: all 0.2s;
+    transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
 }
 
 .btn-outline:hover {
@@ -456,12 +459,12 @@ nav {
     display: flex;
     gap: 20px;
     align-items: start;
-    transition: all 0.2s;
+    transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
 }
 
 .edu-card:hover {
     border-color: #d1d5db;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
 }
 
 .edu-icon {
@@ -502,12 +505,12 @@ nav {
     gap: 16px;
     align-items: start;
     background: var(--bg);
-    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease;
 }
 
-.exp-card:hover {
+.exp-card:hover,
+.event-card:hover {
     border-color: #d1d5db;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
     transform: translateY(-2px);
 }
 
@@ -561,7 +564,7 @@ nav {
     font-size: 0.82rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
     font-family: "Inter", sans-serif;
 }
 
@@ -582,6 +585,19 @@ nav {
 
 .tab-content.active {
     display: block;
+    animation: tab-in 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@keyframes tab-in {
+    from {
+        opacity: 0;
+        transform: translateY(6px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
 }
 
 .skill-card {
@@ -727,12 +743,11 @@ nav {
     display: flex;
     gap: 20px;
     align-items: flex-start;
-    transition: border-color 0.2s, box-shadow 0.2s, transform 0.2s;
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease;
 }
 
 .event-card:hover {
     border-color: #d1d5db;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
     transform: translateY(-2px);
 }
 
@@ -913,7 +928,7 @@ nav {
     border: 1.5px solid var(--border);
     border-radius: var(--radius);
     padding: 18px 20px;
-    transition: all 0.2s;
+    transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
 }
 
 .cert-card:hover {
@@ -1034,7 +1049,7 @@ nav {
     color: #e5e7eb;
     font-size: 0.88rem;
     font-weight: 500;
-    transition: all 0.2s;
+    transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
 }
 
 .contact-link:hover {
@@ -1082,8 +1097,8 @@ footer {
 
 .fade {
     opacity: 0;
-    transform: translateY(20px);
-    transition: opacity 0.6s ease, transform 0.6s ease;
+    transform: translateY(12px);
+    transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1), transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .fade.visible {
@@ -1091,12 +1106,34 @@ footer {
     transform: none;
 }
 
+@media (prefers-reduced-motion: reduce) {
+    html {
+        scroll-behavior: auto;
+    }
+
+    .fade,
+    .loading-fill,
+    .tab-content.active {
+        animation: none;
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+
+    .repo-track {
+        animation: none;
+    }
+}
 @media (max-width: 860px) {
     .nav-links {
         display: none;
     }
 
     .menu-toggle {
+        display: flex;
+    }
+
+    .mobile-menu {
         display: flex;
     }
 

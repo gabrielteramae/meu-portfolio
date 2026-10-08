@@ -3,7 +3,7 @@
     if (!screen) return;
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const minSplashMs = reduceMotion ? 1100 : 4600;
+    const minSplashMs = reduceMotion ? 280 : 1700;
     const started = performance.now();
 
     function hideSplash() {
@@ -25,6 +25,14 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }, { threshold: 0.05, rootMargin: "0px 0px -20px 0px" });
     document.querySelectorAll(".fade").forEach(el => observer.observe(el));
+
+    const marquee = document.querySelector(".repo-track");
+    if (marquee) {
+        const marqueeWatch = new IntersectionObserver((entries) => {
+            marquee.style.animationPlayState = entries.some((entry) => entry.isIntersecting) ? "running" : "paused";
+        });
+        marqueeWatch.observe(marquee.parentElement || marquee);
+    }
 
     document.querySelectorAll(".event-thumbs img").forEach(img => {
         img.addEventListener("click", () => openLightbox(img.src, img.alt));
