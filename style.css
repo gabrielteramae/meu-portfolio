@@ -1378,6 +1378,34 @@ footer {
     padding: 0;
     border: 0;
     display: block;
+    transition: background-color 90ms linear;
+}
+
+.contrib-cell.is-head,
+.contrib-empty.is-head {
+    background: #052e16 !important;
+    border-radius: 50%;
+    box-shadow: 0 0 0 1px #86efac;
+}
+
+:root[data-theme="dark"] .contrib-cell.is-head,
+:root[data-theme="dark"] .contrib-empty.is-head {
+    background: #ecfdf5 !important;
+    box-shadow: 0 0 0 1px #166534;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .contrib-cell,
+    .contrib-empty {
+        transition: none;
+    }
+
+    .contrib-cell.is-head,
+    .contrib-empty.is-head {
+        background: unset !important;
+        border-radius: 2px;
+        box-shadow: none;
+    }
 }
 
 .contrib-cell {

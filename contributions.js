@@ -137,6 +137,86 @@
       pin();
       requestAnimationFrame(pin);
     }
+    startSnake(grid);
+  }
+
+  var snakeTimer = 0;
+  var snakeMarks = [];
+
+  function clearSnake() {
+    snakeMarks.forEach(function (cell) {
+      cell.classList.remove("is-head");
+      cell.style.backgroundColor = "";
+    });
+    snakeMarks = [];
+  }
+
+  function startSnake(grid) {
+    if (snakeTimer) clearInterval(snakeTimer);
+    clearSnake();
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var nodes = grid.children;
+    if (!nodes.length || nodes.length % 7 !== 0) return;
+    var headIndex = -1;
+    var length = 8;
+    var dir = -1;
+    var path = [];
+    var windowKey = "";
+
+    function visibleWindow() {
+      var cols = nodes.length / 7;
+      var start = 0;
+      var end = cols - 1;
+      if (!scrollEl) return { start: start, end: end };
+      var view = scrollEl.getBoundingClientRect();
+      var foundStart = false;
+      for (var col = 0; col < cols; col++) {
+        var rect = nodes[col * 7].getBoundingClientRect();
+        if (!foundStart && rect.right >= view.left + 8) {
+          start = col;
+          foundStart = true;
+        }
+        if (rect.left <= view.right - 8) end = col;
+      }
+      if (end - start < 2) start = Math.max(0, end - 6);
+      return { start: start, end: end };
+    }
+
+    function step() {
+      if (document.hidden) return;
+      var win = visibleWindow();
+      var key = win.start + ":" + win.end;
+      if (key !== windowKey) {
+        windowKey = key;
+        path = [];
+        for (var col = win.start; col <= win.end; col++) {
+          var down = col % 2 === 0;
+          for (var row = 0; row < 7; row++) path.push(col * 7 + (down ? row : 6 - row));
+        }
+      }
+      if (path.length < 2) return;
+      var at = path.indexOf(headIndex);
+      if (at === -1) at = path.length - 1;
+      if (at + dir < 0 || at + dir >= path.length) dir *= -1;
+      at += dir;
+      headIndex = path[at];
+      clearSnake();
+      for (var i = 0; i < length; i++) {
+        var index = at - i * dir;
+        if (index < 0 || index >= path.length) break;
+        var cell = nodes[path[index]];
+        if (!cell) continue;
+        snakeMarks.push(cell);
+        if (i === 0) cell.classList.add("is-head");
+        else {
+          var fade = 1 - i / length;
+          cell.style.backgroundColor = "rgba(34, 197, 94, " + (0.28 + fade * 0.72).toFixed(2) + ")";
+        }
+      }
+    }
+
+    step();
+    snakeTimer = setInterval(step, 120);
   }
 
   fetch("https://github-contributions-api.jogruber.de/v4/" + USER + "?y=last", { cache: "no-store" })
