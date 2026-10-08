@@ -1368,7 +1368,6 @@ footer {
     grid-template-rows: repeat(7, 12px);
     grid-auto-columns: 12px;
     gap: 3px;
-    position: relative;
 }
 
 .contrib-cell,
@@ -1379,17 +1378,6 @@ footer {
     padding: 0;
     border: 0;
     display: block;
-}
-
-.contrib-snake {
-    position: absolute;
-    left: 0;
-    top: 0;
-    z-index: 2;
-    font-size: 36px;
-    line-height: 1;
-    pointer-events: none;
-    filter: drop-shadow(0 1px 1px rgba(0, 0, 0, 0.28));
 }
 
 .contrib-cell {
