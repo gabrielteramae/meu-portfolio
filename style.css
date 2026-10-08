@@ -342,6 +342,7 @@ nav {
     height: 150px;
     border-radius: 50%;
     object-fit: cover;
+    background: #fff;
     border: 3px solid var(--border);
 }
 
