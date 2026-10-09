@@ -17,9 +17,9 @@
 
 document.addEventListener("DOMContentLoaded", function () {
     const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry, i) => {
+        entries.forEach((entry) => {
             if (entry.isIntersecting) {
-                setTimeout(() => entry.target.classList.add("visible"), i * 60);
+                entry.target.classList.add("visible");
                 observer.unobserve(entry.target);
             }
         });

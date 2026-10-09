@@ -25,6 +25,8 @@ html {
     --ink: #111827;
     --nav-bg: rgba(255, 255, 255, 0.96);
     --radius: 12px;
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --t: 160ms;
     color-scheme: light;
 }
 
@@ -47,7 +49,7 @@ body {
     font-family: "Inter", sans-serif;
     background: var(--bg);
     color: var(--text);
-    transition: background 0.3s ease, color 0.3s ease;
+    transition: background-color 180ms var(--ease), color 180ms var(--ease);
     font-size: 15px;
     line-height: 1.6;
     overflow-x: hidden;
@@ -69,7 +71,7 @@ a {
     inset: 0;
     background: black;
     z-index: 9999;
-    transition: opacity 0.6s ease, visibility 0.6s ease;
+    transition: opacity 280ms var(--ease), visibility 280ms var(--ease);
 }
 
 #loading-screen.hide {
@@ -172,6 +174,7 @@ nav {
     z-index: 100;
     background: var(--nav-bg);
     border-bottom: 1px solid var(--border);
+    transition: background-color 180ms var(--ease), border-color 180ms var(--ease);
     padding: 0 5%;
     display: flex;
     align-items: center;
@@ -253,25 +256,29 @@ nav {
 
 .mobile-menu {
     display: none;
-    position: sticky;
+    position: fixed;
     top: 60px;
+    left: 0;
+    right: 0;
     z-index: 99;
     flex-direction: column;
     gap: 4px;
-    padding: 0 5%;
-    max-height: 0;
+    padding: 8px 5% 14px;
     overflow: hidden;
     opacity: 0;
+    transform: translateY(-6px);
+    visibility: hidden;
+    pointer-events: none;
     background: var(--nav-bg);
-    border-bottom: 1px solid transparent;
-    transition: max-height 0.35s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease, padding 0.35s ease;
+    border-bottom: 1px solid var(--border);
+    transition: opacity var(--t) var(--ease), transform 180ms var(--ease), visibility 180ms;
 }
 
 .mobile-menu.open {
-    max-height: 420px;
     opacity: 1;
-    padding: 12px 5%;
-    border-bottom-color: var(--border);
+    transform: none;
+    visibility: visible;
+    pointer-events: auto;
 }
 
 .mobile-menu a {
@@ -280,6 +287,7 @@ nav {
     color: var(--text2);
     padding: 12px 10px;
     border-radius: 8px;
+    transition: background-color var(--t) var(--ease), color var(--t) var(--ease);
 }
 
 .mobile-menu a:active {
@@ -586,7 +594,7 @@ nav {
 
 .tab-content.active {
     display: block;
-    animation: tab-in 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+    animation: tab-in 220ms var(--ease);
 }
 
 @keyframes tab-in {
@@ -611,7 +619,7 @@ nav {
 
 .skill-card:hover {
     border-color: #d1d5db;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
 }
 
 .skill-title {
@@ -815,7 +823,7 @@ nav {
 }
 
 #lightbox {
-    display: none;
+    display: flex;
     position: fixed;
     inset: 0;
     background: rgba(0,0,0,0.88);
@@ -823,10 +831,16 @@ nav {
     align-items: center;
     justify-content: center;
     cursor: zoom-out;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 180ms var(--ease), visibility 180ms;
 }
 
 #lightbox.open {
-    display: flex;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
 }
 
 #lightbox img {
@@ -835,6 +849,12 @@ nav {
     border-radius: 10px;
     box-shadow: 0 8px 40px rgba(0,0,0,0.5);
     cursor: default;
+    transform: translateY(8px);
+    transition: transform 200ms var(--ease);
+}
+
+#lightbox.open img {
+    transform: none;
 }
 
 #lightbox-close {
@@ -856,7 +876,7 @@ nav {
 }
 
 #resume-modal {
-    display: none;
+    display: flex;
     position: fixed;
     inset: 0;
     background: rgba(0,0,0,0.75);
@@ -864,10 +884,16 @@ nav {
     align-items: center;
     justify-content: center;
     padding: 24px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: opacity 180ms var(--ease), visibility 180ms;
 }
 
 #resume-modal.open {
-    display: flex;
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
 }
 
 #resume-modal-content {
@@ -880,6 +906,12 @@ nav {
     flex-direction: column;
     overflow: hidden;
     box-shadow: 0 8px 40px rgba(0,0,0,0.4);
+    transform: translateY(8px);
+    transition: transform 200ms var(--ease);
+}
+
+#resume-modal.open #resume-modal-content {
+    transform: none;
 }
 
 #resume-modal-header {
@@ -969,7 +1001,7 @@ nav {
     position: relative;
     width: 100%;
     height: 100%;
-    transition: transform 0.55s cubic-bezier(.4, 0, .2, 1);
+    transition: transform 320ms var(--ease);
     transform-style: preserve-3d;
 }
 
@@ -1098,13 +1130,106 @@ footer {
 
 .fade {
     opacity: 0;
-    transform: translateY(12px);
-    transition: opacity 0.45s cubic-bezier(0.22, 1, 0.36, 1), transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+    transform: translateY(8px);
+    transition: opacity 280ms var(--ease), transform 280ms var(--ease);
 }
 
 .fade.visible {
     opacity: 1;
     transform: none;
+}
+
+.edu-card,
+.exp-card,
+.event-card,
+.skill-card,
+.cert-card,
+.contact-link,
+.repo-card,
+.nav-links a,
+.btn-dark,
+.btn-outline,
+.theme-toggle,
+.menu-toggle,
+.tab-btn,
+.contrib-cell,
+.event-thumbs img,
+.repo-card-link i {
+    transition: transform var(--t) var(--ease), opacity var(--t) var(--ease), background-color var(--t) var(--ease), border-color var(--t) var(--ease), color var(--t) var(--ease);
+}
+
+.repo-card-link i {
+    display: inline-block;
+}
+
+@media (hover: hover) and (pointer: fine) {
+    .edu-card.fade.visible:hover,
+    .exp-card.fade.visible:hover,
+    .event-card.fade.visible:hover,
+    .cert-card.fade.visible:hover,
+    .skill-card.fade.visible:hover {
+        transform: translateY(-2px);
+    }
+
+    .repo-card:hover {
+        transform: translateY(-3px);
+    }
+
+    .repo-card:hover .repo-card-link i {
+        transform: translate(2px, -2px);
+    }
+
+    .contact-link:hover {
+        transform: translateY(-1px);
+    }
+
+    .contrib-cell:hover {
+        transform: scale(1.18);
+    }
+}
+
+.btn-dark:active,
+.btn-outline:active,
+.theme-toggle:active,
+.menu-toggle:active,
+.tab-btn:active,
+.contact-link:active,
+.nav-links a:active {
+    transform: scale(0.98);
+}
+
+@media (hover: none) {
+    .edu-card:hover,
+    .exp-card:hover,
+    .event-card:hover,
+    .cert-card:hover,
+    .skill-card:hover,
+    .event-thumbs img:hover {
+        transform: none;
+    }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+    .hero-left > * {
+        animation: rise 280ms var(--ease) backwards;
+    }
+
+    .hero-left > :nth-child(2) { animation-delay: 30ms; }
+    .hero-left > :nth-child(3) { animation-delay: 60ms; }
+    .hero-left > :nth-child(4) { animation-delay: 90ms; }
+    .hero-left > :nth-child(5) { animation-delay: 120ms; }
+}
+
+@keyframes rise {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1114,7 +1239,8 @@ footer {
 
     .fade,
     .loading-fill,
-    .tab-content.active {
+    .tab-content.active,
+    .hero-left > * {
         animation: none;
         opacity: 1;
         transform: none;
