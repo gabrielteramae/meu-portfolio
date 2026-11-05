@@ -7,7 +7,6 @@
   var totalEl = document.getElementById("contrib-total");
   var calEl = document.getElementById("contrib-cal");
   var dayEl = document.getElementById("contrib-day");
-  var scrollEl = document.getElementById("contrib-scroll");
   if (!totalEl || !calEl) return;
 
   function formatDay(date, count) {
@@ -130,13 +129,6 @@
     row.appendChild(labelsCol);
     row.appendChild(board);
     calEl.appendChild(row);
-    if (scrollEl) {
-      var pin = function () {
-        scrollEl.scrollLeft = scrollEl.scrollWidth;
-      };
-      pin();
-      requestAnimationFrame(pin);
-    }
   }
 
   fetch("https://github-contributions-api.jogruber.de/v4/" + USER + "?y=last", { cache: "no-store" })

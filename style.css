@@ -52,7 +52,7 @@ body {
     transition: background-color 180ms var(--ease), color 180ms var(--ease);
     font-size: 15px;
     line-height: 1.6;
-    overflow-x: hidden;
+    overflow-x: clip;
     overflow-wrap: break-word;
     -webkit-text-size-adjust: 100%;
 }
@@ -1442,11 +1442,16 @@ footer {
 
 .contrib-scroll {
     overflow-x: auto;
+    overflow-y: hidden;
     max-width: 100%;
+    direction: rtl;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
 }
 
 .contrib-cal {
     width: max-content;
+    direction: ltr;
 }
 
 .contrib-row {
