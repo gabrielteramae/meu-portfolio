@@ -1,18 +1,21 @@
 (function () {
     const screen = document.getElementById("loading-screen");
-    if (!screen) return;
+    if (!screen || document.documentElement.classList.contains("skip-splash")) return;
 
-    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    const minSplashMs = reduceMotion ? 280 : 1700;
+    const minSplashMs = 420;
     const started = performance.now();
 
     function hideSplash() {
         const wait = Math.max(0, minSplashMs - (performance.now() - started));
-        setTimeout(() => screen.classList.add("hide"), wait);
+        setTimeout(() => {
+            screen.classList.add("hide");
+            try { sessionStorage.setItem("seen-welcome", "1"); } catch (e) {}
+            screen.addEventListener("transitionend", () => screen.remove(), { once: true });
+        }, wait);
     }
 
-    if (document.readyState === "complete") hideSplash();
-    else window.addEventListener("load", hideSplash);
+    if (document.readyState === "complete" || document.readyState === "interactive") hideSplash();
+    else document.addEventListener("DOMContentLoaded", hideSplash);
 })();
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -20,18 +23,41 @@ document.addEventListener("DOMContentLoaded", function () {
         entries.forEach((entry) => {
             if (entry.isIntersecting) {
                 entry.target.classList.add("visible");
+                entry.target.addEventListener("transitionend", () => {
+                    entry.target.style.transitionDelay = "";
+                }, { once: true });
                 observer.unobserve(entry.target);
             }
         });
     }, { threshold: 0.05, rootMargin: "0px 0px -20px 0px" });
-    document.querySelectorAll(".fade").forEach(el => observer.observe(el));
+    document.querySelectorAll(".fade").forEach((el) => {
+        const siblings = el.parentElement
+            ? [...el.parentElement.children].filter((node) => node.classList.contains("fade"))
+            : [];
+        const index = siblings.indexOf(el);
+        if (index > 0) el.style.transitionDelay = Math.min(index, 5) * 40 + "ms";
+        observer.observe(el);
+    });
 
     const marquee = document.querySelector(".repo-track");
     if (marquee) {
+        let inView = true;
         const marqueeWatch = new IntersectionObserver((entries) => {
-            marquee.style.animationPlayState = entries.some((entry) => entry.isIntersecting) ? "running" : "paused";
+            inView = entries.some((entry) => entry.isIntersecting);
+            marquee.style.animationPlayState = inView ? "running" : "paused";
         });
         marqueeWatch.observe(marquee.parentElement || marquee);
+        const scroller = marquee.parentElement;
+        if (scroller) {
+            const play = () => {
+                marquee.style.animationPlayState = inView ? "running" : "paused";
+            };
+            scroller.addEventListener("pointerdown", () => {
+                marquee.style.animationPlayState = "paused";
+            }, { passive: true });
+            scroller.addEventListener("pointerup", play, { passive: true });
+            scroller.addEventListener("pointercancel", play, { passive: true });
+        }
     }
 
     document.querySelectorAll(".event-thumbs img").forEach(img => {
@@ -82,7 +108,7 @@ function initMobileMenu() {
     });
 
     window.addEventListener("resize", () => {
-        if (window.innerWidth > 860) setOpen(false);
+        if (window.innerWidth > 1120) setOpen(false);
     });
 }
 
@@ -101,12 +127,23 @@ function initThemeToggle() {
 
     updateIcon(document.documentElement.getAttribute("data-theme") || "light");
 
-    toggleBtn.addEventListener("click", () => {
-        const current = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
-        const next = current === "dark" ? "light" : "dark";
+    function applyTheme(next) {
         document.documentElement.setAttribute("data-theme", next);
         localStorage.setItem("theme", next);
         updateIcon(next);
+        const meta = document.querySelector('meta[name="theme-color"]');
+        if (meta) meta.content = next === "dark" ? "#0e1015" : "#ffffff";
+    }
+
+    toggleBtn.addEventListener("click", () => {
+        const current = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+        const next = current === "dark" ? "light" : "dark";
+        const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        if (!reduce && typeof document.startViewTransition === "function") {
+            document.startViewTransition(() => applyTheme(next));
+        } else {
+            applyTheme(next);
+        }
     });
 }
 

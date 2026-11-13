@@ -131,7 +131,7 @@
     calEl.appendChild(row);
   }
 
-  fetch("https://github-contributions-api.jogruber.de/v4/" + USER + "?y=last", { cache: "no-store" })
+  fetch("https://github-contributions-api.jogruber.de/v4/" + USER + "?y=last")
     .then(function (response) {
       if (!response.ok) throw new Error(String(response.status));
       return response.json();

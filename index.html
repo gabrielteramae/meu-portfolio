@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="description" content="Portfólio de Gabriel Teramae Chan">
     <meta name="keywords"
         content="Gabriel Teramae Chan, ESG, Risco Socioambiental, Compliance, Azure Databricks, Python, Banco BMG, Gestão Ambiental, USP, Portfólio">
@@ -13,15 +13,26 @@
     <title>Meu Portfólio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preload" href="perfil.jpg" as="image" fetchpriority="high">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
-    <link rel="stylesheet" href="style.css?v=5">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet"></noscript>
+    <link rel="stylesheet" href="style.css?v=6">
     <script>
         (function () {
             var saved = localStorage.getItem("theme");
             var theme = saved || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
-            document.documentElement.setAttribute("data-theme", theme);
+            var root = document.documentElement;
+            root.setAttribute("data-theme", theme);
+            var meta = document.createElement("meta");
+            meta.name = "theme-color";
+            meta.content = theme === "dark" ? "#0e1015" : "#ffffff";
+            document.head.appendChild(meta);
+            try {
+                if (sessionStorage.getItem("seen-welcome") === "1" || window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+                    root.classList.add("skip-splash");
+                }
+            } catch (e) {}
         })();
     </script>
 </head>
@@ -408,8 +419,8 @@
                         ferramentas e automatizar processos de ponta a ponta, com diferentes níveis de autonomia.
                     </p>
                     <div class="event-thumbs">
-                        <img src="images/event-aws-summit-1.jpeg" alt="AWS Summit São Paulo - Bem-vindos" loading="lazy">
-                        <img src="images/event-aws-summit-2.jpeg" alt="AWS Summit São Paulo - credencial e brindes" loading="lazy">
+                        <img src="images/event-aws-summit-1.jpeg" alt="AWS Summit São Paulo - Bem-vindos" loading="lazy" decoding="async">
+                        <img src="images/event-aws-summit-2.jpeg" alt="AWS Summit São Paulo - credencial e brindes" loading="lazy" decoding="async">
                     </div>
                 </div>
             </div>
@@ -427,8 +438,8 @@
                         recursos para transformar IA em valor real para o negócio.
                     </p>
                     <div class="event-thumbs">
-                        <img src="images/event-cubo-ia-1.jpeg" alt="O Custo da IA - Oracle no Cubo Itaú" loading="lazy">
-                        <img src="images/event-cubo-ia-2.jpeg" alt="Fachada do Cubo Itaú" loading="lazy">
+                        <img src="images/event-cubo-ia-1.jpeg" alt="O Custo da IA - Oracle no Cubo Itaú" loading="lazy" decoding="async">
+                        <img src="images/event-cubo-ia-2.jpeg" alt="Fachada do Cubo Itaú" loading="lazy" decoding="async">
                     </div>
                 </div>
             </div>
@@ -446,8 +457,8 @@
                         oportunidades dentro do maior banco da América Latina.
                     </p>
                     <div class="event-thumbs">
-                        <img src="images/event-itau-carreiras-1.jpeg" alt="Auditório do Itaú Carreiras 2026" loading="lazy">
-                        <img src="images/event-itau-carreiras-2.jpeg" alt="Itaú Carreiras 2026" loading="lazy">
+                        <img src="images/event-itau-carreiras-1.jpeg" alt="Auditório do Itaú Carreiras 2026" loading="lazy" decoding="async">
+                        <img src="images/event-itau-carreiras-2.jpeg" alt="Itaú Carreiras 2026" loading="lazy" decoding="async">
                     </div>
                 </div>
             </div>
@@ -465,8 +476,8 @@
                         tema: <em>"IA que facilita, humanos que transformam"</em>.
                     </p>
                     <div class="event-thumbs">
-                        <img src="images/event-itau-1.jpeg" alt="Semana de Produtos Itaú 2026" loading="lazy">
-                        <img src="images/event-itau-2.jpeg" alt="Semana de Produtos Itaú 2026" loading="lazy">
+                        <img src="images/event-itau-1.jpeg" alt="Semana de Produtos Itaú 2026" loading="lazy" decoding="async">
+                        <img src="images/event-itau-2.jpeg" alt="Semana de Produtos Itaú 2026" loading="lazy" decoding="async">
                     </div>
                 </div>
             </div>
@@ -484,8 +495,8 @@
                         banco, desde a organização das camadas até o fluxo de desenvolvimento.
                     </p>
                     <div class="event-thumbs">
-                        <img src="images/event-c6-d1-1.jpeg" alt="C6 Tech Week - arquitetura" loading="lazy">
-                        <img src="images/event-c6-d1-2.jpeg" alt="C6 Tech Week - espaço" loading="lazy">
+                        <img src="images/event-c6-d1-1.jpeg" alt="C6 Tech Week - arquitetura" loading="lazy" decoding="async">
+                        <img src="images/event-c6-d1-2.jpeg" alt="C6 Tech Week - espaço" loading="lazy" decoding="async">
                     </div>
                 </div>
             </div>
@@ -503,8 +514,8 @@
                         a mesma base tecnológica (LLMs, memória e knowledge base), promovendo padronização e escalabilidade.
                     </p>
                     <div class="event-thumbs">
-                        <img src="images/event-c6-d2-1.jpeg" alt="C6 Tech Week - Steve Jobs" loading="lazy">
-                        <img src="images/event-c6-d2-2.jpeg" alt="C6 Tech Week - fachada" loading="lazy">
+                        <img src="images/event-c6-d2-1.jpeg" alt="C6 Tech Week - Steve Jobs" loading="lazy" decoding="async">
+                        <img src="images/event-c6-d2-2.jpeg" alt="C6 Tech Week - fachada" loading="lazy" decoding="async">
                     </div>
                 </div>
             </div>
@@ -521,8 +532,8 @@
                         de arquiteturas robustas, decisões rápidas e segurança integrada desde a concepção das soluções.
                     </p>
                     <div class="event-thumbs">
-                        <img src="images/event-c6-d3-1.jpeg" alt="C6 Tech Week - encerramento" loading="lazy">
-                        <img src="images/event-c6-d3-2.jpeg" alt="C6 Tech Week - IA na segurança" loading="lazy">
+                        <img src="images/event-c6-d3-1.jpeg" alt="C6 Tech Week - encerramento" loading="lazy" decoding="async">
+                        <img src="images/event-c6-d3-2.jpeg" alt="C6 Tech Week - IA na segurança" loading="lazy" decoding="async">
                     </div>
                 </div>
             </div>
@@ -540,8 +551,8 @@
                         mas em como ele é aplicado.
                     </p>
                     <div class="event-thumbs">
-                        <img src="images/1782255703024.jpeg" alt="AWS - Welcome to the infinite toolbox" loading="lazy">
-                        <img src="images/1782255701310.jpeg" alt="LLMs eficientes: custo, contexto e arquitetura" loading="lazy">
+                        <img src="images/1782255703024.jpeg" alt="AWS - Welcome to the infinite toolbox" loading="lazy" decoding="async">
+                        <img src="images/1782255701310.jpeg" alt="LLMs eficientes: custo, contexto e arquitetura" loading="lazy" decoding="async">
                     </div>
                 </div>
             </div>
@@ -594,10 +605,9 @@
         <img id="lightbox-img" src="" alt="">
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script>
-    <script src="falling-text.js"></script>
-    <script src="script.js?v=4"></script>
-    <script src="contributions.js?v=4"></script>
+    <script src="falling-text.js?v=2" defer></script>
+    <script src="script.js?v=5" defer></script>
+    <script src="contributions.js?v=5" defer></script>
 </body>
 
 </html>

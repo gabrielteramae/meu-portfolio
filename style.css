@@ -8,7 +8,7 @@
 
 html {
     scroll-behavior: smooth;
-    scroll-padding-top: 72px;
+    scroll-padding-top: calc(72px + env(safe-area-inset-top, 0px));
 }
 
 :root {
@@ -26,7 +26,7 @@ html {
     --nav-bg: rgba(255, 255, 255, 0.96);
     --radius: 12px;
     --ease: cubic-bezier(0.22, 1, 0.36, 1);
-    --t: 160ms;
+    --t: 150ms;
     color-scheme: light;
 }
 
@@ -55,10 +55,17 @@ body {
     overflow-x: clip;
     overflow-wrap: break-word;
     -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+}
+
+a,
+button {
+    touch-action: manipulation;
 }
 
 img {
     max-width: 100%;
+    height: auto;
 }
 
 a {
@@ -69,9 +76,13 @@ a {
 #loading-screen {
     position: fixed;
     inset: 0;
-    background: black;
+    background: #0e1015;
     z-index: 9999;
-    transition: opacity 280ms var(--ease), visibility 280ms var(--ease);
+    transition: opacity 200ms var(--ease), visibility 200ms var(--ease);
+}
+
+html.skip-splash #loading-screen {
+    display: none;
 }
 
 #loading-screen.hide {
@@ -132,6 +143,28 @@ a {
     z-index: 2;
 }
 
+@media (prefers-reduced-motion: no-preference) {
+    .falling-line .word {
+        animation: word-in 420ms var(--ease) backwards;
+    }
+
+    .falling-line-msg .word:nth-child(1) { animation-delay: 70ms; }
+    .falling-line-msg .word:nth-child(2) { animation-delay: 120ms; }
+    .falling-line-msg .word:nth-child(3) { animation-delay: 170ms; }
+}
+
+@keyframes word-in {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
 .falling-text-canvas {
     position: absolute;
     inset: 0;
@@ -159,7 +192,7 @@ a {
     border-radius: 99px;
     transform: scaleX(0);
     transform-origin: left center;
-    animation: fill 1.5s cubic-bezier(0.22, 1, 0.36, 1) 0.15s forwards;
+    animation: fill 360ms var(--ease) forwards;
 }
 
 @keyframes fill {
@@ -175,11 +208,11 @@ nav {
     background: var(--nav-bg);
     border-bottom: 1px solid var(--border);
     transition: background-color 180ms var(--ease), border-color 180ms var(--ease);
-    padding: 0 5%;
+    padding: env(safe-area-inset-top, 0px) max(5%, env(safe-area-inset-right, 0px)) 0 max(5%, env(safe-area-inset-left, 0px));
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 60px;
+    height: calc(60px + env(safe-area-inset-top, 0px));
 }
 
 .nav-logo {
@@ -206,7 +239,7 @@ nav {
     color: var(--text3);
     padding: 6px 12px;
     border-radius: 6px;
-    transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
+    transition: background-color var(--t) var(--ease), color var(--t) var(--ease);
 }
 
 .nav-links a:hover {
@@ -241,8 +274,8 @@ nav {
 
 .menu-toggle {
     display: none;
-    width: 36px;
-    height: 36px;
+    width: 44px;
+    height: 44px;
     border-radius: 8px;
     border: 1.5px solid var(--border);
     background: var(--bg);
@@ -257,7 +290,7 @@ nav {
 .mobile-menu {
     display: none;
     position: fixed;
-    top: 60px;
+    top: calc(60px + env(safe-area-inset-top, 0px));
     left: 0;
     right: 0;
     z-index: 99;
@@ -314,7 +347,7 @@ nav {
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
+    transition: background-color var(--t) var(--ease), color var(--t) var(--ease), border-color var(--t) var(--ease);
     flex-shrink: 0;
 }
 
@@ -420,7 +453,7 @@ nav {
     font-size: 0.85rem;
     font-weight: 600;
     border-radius: 8px;
-    transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
+    transition: background-color var(--t) var(--ease), color var(--t) var(--ease);
 }
 
 .btn-outline:hover {
@@ -468,11 +501,11 @@ nav {
     display: flex;
     gap: 20px;
     align-items: start;
-    transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
+    transition: background-color var(--t) var(--ease), color var(--t) var(--ease);
 }
 
 .edu-card:hover {
-    border-color: #d1d5db;
+    border-color: var(--text3);
     transform: translateY(-2px);
 }
 
@@ -514,12 +547,12 @@ nav {
     gap: 16px;
     align-items: start;
     background: var(--bg);
-    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease;
+    transition: transform var(--t) var(--ease), border-color var(--t) var(--ease);
 }
 
 .exp-card:hover,
 .event-card:hover {
-    border-color: #d1d5db;
+    border-color: var(--text3);
     transform: translateY(-2px);
 }
 
@@ -573,7 +606,7 @@ nav {
     font-size: 0.82rem;
     font-weight: 600;
     cursor: pointer;
-    transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
+    transition: background-color var(--t) var(--ease), color var(--t) var(--ease), border-color var(--t) var(--ease);
     font-family: "Inter", sans-serif;
 }
 
@@ -614,11 +647,11 @@ nav {
     border: 1.5px solid var(--border);
     border-radius: var(--radius);
     padding: 24px;
-    transition: border-color 0.2s, box-shadow 0.2s;
+    transition: border-color var(--t) var(--ease), box-shadow var(--t) var(--ease), transform var(--t) var(--ease);
 }
 
 .skill-card:hover {
-    border-color: #d1d5db;
+    border-color: var(--text3);
     transform: translateY(-2px);
 }
 
@@ -752,11 +785,11 @@ nav {
     display: flex;
     gap: 20px;
     align-items: flex-start;
-    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.3s ease;
+    transition: transform var(--t) var(--ease), border-color var(--t) var(--ease);
 }
 
 .event-card:hover {
-    border-color: #d1d5db;
+    border-color: var(--text3);
     transform: translateY(-2px);
 }
 
@@ -812,7 +845,7 @@ nav {
     object-fit: cover;
     border-radius: 8px;
     border: 1.5px solid var(--border);
-    transition: transform 0.2s, box-shadow 0.2s;
+    transition: transform var(--t) var(--ease), box-shadow var(--t) var(--ease);
     cursor: pointer;
     flex-shrink: 0;
 }
@@ -961,7 +994,7 @@ nav {
     border: 1.5px solid var(--border);
     border-radius: var(--radius);
     padding: 18px 20px;
-    transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
+    transition: background-color var(--t) var(--ease), color var(--t) var(--ease);
 }
 
 .cert-card:hover {
@@ -1082,7 +1115,7 @@ nav {
     color: #e5e7eb;
     font-size: 0.88rem;
     font-weight: 500;
-    transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
+    transition: background-color var(--t) var(--ease), color var(--t) var(--ease);
 }
 
 .contact-link:hover {
@@ -1104,7 +1137,7 @@ nav {
 
 footer {
     background: #0d1117;
-    padding: 24px 5%;
+    padding: 24px max(5%, env(safe-area-inset-right, 0px)) calc(24px + env(safe-area-inset-bottom, 0px)) max(5%, env(safe-area-inset-left, 0px));
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -1240,7 +1273,8 @@ footer {
     .fade,
     .loading-fill,
     .tab-content.active,
-    .hero-left > * {
+    .hero-left > *,
+    .falling-line .word {
         animation: none;
         opacity: 1;
         transform: none;
@@ -1251,7 +1285,13 @@ footer {
         animation: none;
     }
 }
-@media (max-width: 860px) {
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation-duration: 160ms;
+    animation-timing-function: var(--ease);
+}
+
+@media (max-width: 1120px) {
     .nav-links {
         display: none;
     }
@@ -1364,15 +1404,133 @@ footer {
     }
 
     .repo-track {
-        animation-duration: 22s;
+        animation-duration: 28s;
     }
 
+    .skills-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scroll-snap-type: x proximity;
+        scrollbar-width: none;
+        margin-right: -16px;
+        margin-left: -16px;
+        padding: 0 16px 6px;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .skills-tabs::-webkit-scrollbar {
+        display: none;
+    }
+
+    .tab-btn {
+        flex: 0 0 auto;
+        scroll-snap-align: start;
+        min-height: 40px;
+    }
+
+    .theme-toggle,
+    .menu-toggle {
+        width: 44px;
+        height: 44px;
+    }
+
+    .hero-left img {
+        width: 120px;
+        height: 120px;
+    }
+
+    .hero-bullet {
+        text-wrap: pretty;
+    }
+
+    .contact-info-value,
+    .exp-meta,
+    .event-desc {
+        overflow-wrap: anywhere;
+    }
+
+    #lightbox-close {
+        top: max(12px, env(safe-area-inset-top, 0px));
+        right: max(12px, env(safe-area-inset-right, 0px));
+        width: 44px;
+        height: 44px;
+    }
+
+    footer {
+        padding-bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+    }
+}
+
+@media (max-width: 390px) {
+    .nav-logo {
+        font-size: 0.82rem;
+    }
+
+    .hero-title {
+        font-size: 1.85rem;
+    }
+
+    .section,
+    #contact .section {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .skills-tabs {
+        margin-left: -14px;
+        margin-right: -14px;
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+}
+
+@media (hover: none) and (pointer: coarse) {
+    .repo-marquee {
+        overflow-x: auto;
+        -webkit-mask-image: none;
+        mask-image: none;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .repo-marquee::-webkit-scrollbar {
+        display: none;
+    }
+
+    .repo-track {
+        animation: none;
+    }
+
+    .repo-card {
+        scroll-snap-align: start;
+    }
+
+    .repo-card[aria-hidden="true"] {
+        display: none;
+    }
+}
+
+@media (max-height: 500px) and (orientation: landscape) {
+    #hero {
+        min-height: 0;
+        padding: 28px 0;
+    }
+
+    .hero-left img {
+        width: 88px;
+        height: 88px;
+    }
+}
+
+@media (max-width: 560px) {
     #resume-modal {
         padding: 0;
     }
 
     #resume-modal-content {
         height: 100vh;
+        height: 100dvh;
         border-radius: 0;
     }
 }
